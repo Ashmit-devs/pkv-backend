@@ -24,12 +24,16 @@ public class UserController {
     private UserRepository userRepository;
 
     @PostMapping("/register")
-    public String registerUser(@RequestBody User user) {
+    public Map<String, Object> registerUser(@RequestBody User user) {
+        Map<String, Object> response = new HashMap<>();
         if (userRepository.existsByEmail(user.getEmail())) {
-            return "Error: Username is already taken!";
+            response.put("message", "Error: Email is already taken!");
+            return response;
         }
-        userRepository.save(user);
-        return "User registered successfully!";
+        User savedUser = userRepository.save(user);
+        response.put("message", "User registered successfully!");
+        response.put("userId", savedUser.getId());
+        return response;
     }
 
     @PostMapping("/login")
