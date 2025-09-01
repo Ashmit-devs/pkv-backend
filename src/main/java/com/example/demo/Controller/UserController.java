@@ -38,17 +38,23 @@ public class UserController {
 
     @PostMapping("/login")
     public Object loginUser(@RequestBody User loginRequest) {
-    Optional<User> user = userRepository.findByEmail(loginRequest.getEmail());
-    if (user.isPresent() && user.get().getPassword().equals(loginRequest.getPassword())) {
-        // Build a JSON-like response using a Map
-        Map<String, Object> response = new HashMap<>();
-        response.put("message", "Login successful!");
-        response.put("userId", user.get().getId()); // assuming User has getId()
-        return response;
-    } else {
-        Map<String, Object> response = new HashMap<>();
-        response.put("message", "Invalid email or password!");
-        return response;
+        Optional<User> user = userRepository.findByEmail(loginRequest.getEmail());
+        if (user.isPresent() && user.get().getPassword().equals(loginRequest.getPassword())) {
+            // Build a JSON-like response using a Map
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", "Login successful!");
+            response.put("userId", user.get().getId()); // assuming User has getId()
+            return response;
+        } else {
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", "Invalid email or password!");
+            return response;
+        }
     }
-}
+
+    // Inside UserController, after loginUser
+    @GetMapping("/ping")
+    public String ping() {
+        return "OK";
+    }
 }
