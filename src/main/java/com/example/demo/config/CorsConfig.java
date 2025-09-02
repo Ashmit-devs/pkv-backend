@@ -13,7 +13,7 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:5500", "http://127.0.0.1:5500", 
+                        .allowedOrigins("http://localhost:5500", "http://127.0.0.1:3000", 
                                         "https://personalknowledgevault.netlify.app") // update with Netlify URL
                         .allowedMethods("GET", "POST", "PUT", "DELETE");
             }
